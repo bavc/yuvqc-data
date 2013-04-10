@@ -4,12 +4,13 @@
     targetNamespace="http://www.bavc.org/tbd"
     xmlns:ffprobe="http://www.bavc.org/tbd">
 
-    <xsd:element name="ffprobe" type="ffprobe:ffprobeType"/>
+    <xsd:element name="qctools" type="qctools:qctoolsType">
 
-    <xsd:complexType name="ffprobeType">
+    <xsd:complexType name="qctools">
         <xsd:sequence>
             <xsd:element name="packets"  type="ffprobe:packetsType" minOccurs="0" maxOccurs="1" />
             <xsd:element name="frames"   type="ffprobe:framesType"  minOccurs="0" maxOccurs="1" />
+            <xsd:element name="fields" type="qctools:fieldsType" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="streams"  type="ffprobe:streamsType" minOccurs="0" maxOccurs="1" />
             <xsd:element name="format"   type="ffprobe:formatType"  minOccurs="0" maxOccurs="1" />
             <xsd:element name="error"    type="ffprobe:errorType"   minOccurs="0" maxOccurs="1" />
@@ -79,6 +80,45 @@
       <xsd:attribute name="top_field_first"        type="xsd:int"   />
       <xsd:attribute name="repeat_pict"            type="xsd:int"   />
     </xsd:complexType>
+    
+    <xsd:complexType name="fieldsType">
+            <xsd:sequence>
+                <xsd:element name="field" type="qctools:fieldType" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>   
+            <xsd:complexType name="fieldType">
+                <xsd:attritube name="frame_number" type="xsd:decimal" use="required" />
+                <xsd:attribute name="frame_difference" type="xsd:decimal" use="required" />
+                <xsd:attribute name="y_min" type="xsd:decimal" use="required" />
+                <xsd:attribute name="y_avg" type="xsd:decimal" use="required" />
+                <xsd:attritube name="y_max" type="xsd:decimal" use="required" />
+                
+                <xsd:attribute name="u_min" type="xsd:decimal" use="required" />
+                <xsd:attribute name="u_avg" type="xsd:decimal" use="required" />
+                <xsd:attritube name="u_max" type="xsd:decimal" use="required" />
+                
+                <xsd:attribute name="v_min" type="xsd:decimal" use="required" />
+                <xsd:attribute name="v_avg" type="xsd:decimal" use="required" />
+                <xsd:attribute name="v_max" type="xsd:decimal" use="required" />
+                
+                <xsd:attribute name="speckle_noise" type="xsd:decimal" use="required" minInclusive="0" maxInclusive="100"/>
+                <xsd:attribute name="vert_banding" type="xsd:decimal" use="required" />
+                <xsd:attribute name="hue_rotate" type="xsd:decimal" use="required" />
+                <xsd:attribute name="ringing" type="xsd:decimal" use="required" />
+            </xsd:complexType>
+            
+        <xsd:complexType name="frameType">
+            <xsd:attribute name="media_type"    type="xsd:string"   use="required" />
+            <xsd:attribute name="key_frame"     type="xsd:int"      use="required"/>
+            <xsd:attribute name="pts"           type="xsd:long" />
+            <xsd:attribute name="pts_time"      type="xsd:float"/>
+            <xsd:attribute name="pkt_pts_time"  type="xsd:float"/>
+            <xsd:attribute name="pkt_dts"       type="xsd:long"/>
+            <xsd:attribute name="pkt_dts_time"  type="xsd:float"/>
+            <xsd:attribute name="pkt_duration_time" type="xsd:float"/>
+            <xsd:attribute name="pkt_duration_time" type="xsd:long"/>
+            <xsd:attribute name="pkt_pos"       type="xsd:long" />
+            <xsd:attribute name="pkt_size"      type="xsd:int" />
+         </xsd:complexType>
 
     <xsd:complexType name="streamsType">
         <xsd:sequence>
